@@ -1,0 +1,97 @@
+body {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr 8fr 1fr;
+    height: 100vh;
+    width: 100vw;
+}
+
+.header {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+    text-decoration: none;
+}
+
+.sidebar {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.project-names {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
+
+.footer {
+    grid-column: 1 / 3;
+    grid-row: 3 / 4;
+}
+
+.add-window {
+    display: grid;
+    grid-template-columns: 2fr 4fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 5fr;
+
+    height: 350px;
+    width: 500px;
+
+    border: red 2px solid;
+}
+
+.new-todo,
+.new-project,
+.new-note {
+    grid-column: 1 / 2;
+}
+
+.add-todo-form,
+.add-project-form,
+.add-note-form,
+.edit-todo-form,
+.edit-note-form {
+    grid-column: 2 / 3;
+    grid-row: 2 / -1;
+}
+
+.add-window,
+.add-project-form,
+.add-note-form,
+.edit-todo-form,
+.edit-note-form {
+    display: none;
+}
+
+.close {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+}
+
+button {
+    cursor: pointer;
+}
+
+.notes-page {
+    display: none;
+}
+
+.todo-item > img {
+    width: 1.5rem;
+    height: auto;
+}
+
+.todo-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
