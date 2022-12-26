@@ -3,7 +3,7 @@ import './style.css';
 import Remove from "./remove.png";
 import Edit from "./edit.png";
 
-const pageTemplate = () => {
+const domManipulator = () => {
     let todos = [];
     let projects = ['MAIN'];
     let notes = [];
@@ -82,20 +82,25 @@ const pageTemplate = () => {
         });
         edit.addEventListener('click', () => {
             //open the add todo window with the details and allow editing the details
+            document.querySelector('.add-window').style.display = 'none';
             const todoForm = document.querySelector('.edit-todo-form');
             todoForm.style.display = 'block';
-
+            const index = todos.findIndex(todo => todo.title === text);
+            document.getElementById('edit-todo-title').value = todos[index].title;
+            document.getElementById('edit-todo-text').value = todos[index].text;
+            document.getElementById('edit-due-date').value = todos[index].dueDate;
+            document.getElementById('edit-projects').value = todos[index].project;
+            document.getElementById('edit-priority').value = todos[index].priority;
+            
         });
         remove.addEventListener('click', () => {
-            const index = 
-            
-            console.log(todos);
+            const index = todos.findIndex(todo => todo.title === text);
+            todos.splice(index, 1);
             todoContainer.remove();
-            console.log(todos);
         });
     };
 
-    const getDueDate =(dueDate) => {
+    const getDueDate = (dueDate) => {
         const date = dueDate.split('-');
         const day = date[2];
         const month = date[1];
@@ -127,7 +132,7 @@ const pageTemplate = () => {
         
     };
 
-    function updateTodoFormProjectOptions() {
+    const updateTodoFormProjectOptions = () => {
         const projectsSelection = document.getElementById('projects');
         projects.forEach(key => {
             const projectOption = document.createElement('option');
@@ -164,7 +169,7 @@ const pageTemplate = () => {
     return {generatePage, generateDOMElement, clearForms, generateTodo, generateProject, generateNote};
 };
 
-const page = pageTemplate();
+const page = domManipulator();
 page.generatePage();
 
 const addTodoBtn = document.querySelector('.submit-todo');
