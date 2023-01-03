@@ -6,6 +6,8 @@ module.exports = {
   entry: {
     index: './src/index.js',
     todos: './src/todos.js',
+    projects: './src/projects.js',
+    notes: './src/notes.js',
   },
   devtool: 'inline-source-map',
   plugins: [

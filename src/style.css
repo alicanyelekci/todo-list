@@ -3,7 +3,7 @@ body {
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 1fr 8fr 1fr;
     height: 100vh;
-    width: 100vw;
+    width: 90vw;
 }
 
 .header {
@@ -58,8 +58,8 @@ body {
 .add-todo-form,
 .add-project-form,
 .add-note-form,
-.edit-todo-form,
-.edit-note-form {
+.edit-todo-window,
+.edit-note-window {
     grid-column: 2 / 3;
     grid-row: 2 / -1;
 }
@@ -67,8 +67,8 @@ body {
 .add-window,
 .add-project-form,
 .add-note-form,
-.edit-todo-form,
-.edit-note-form {
+.edit-todo-window,
+.edit-note-window {
     display: none;
 }
 
@@ -85,12 +85,14 @@ button {
     display: none;
 }
 
-.todo-item > img {
+.todo-item > img,
+.note-item > img {
     width: 1.5rem;
     height: auto;
 }
 
-.todo-item {
+.todo-item,
+.note-item {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
