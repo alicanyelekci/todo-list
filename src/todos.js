@@ -28,7 +28,7 @@ export default class Todos {
 
         const title = document.createElement('div');
         title.className = 'title';
-        title.innerText = this.text;
+        title.innerText = this.title;
         todoContainer.appendChild(title);
 
         const date = document.createElement('div');

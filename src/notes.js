@@ -19,16 +19,19 @@ export default class Notes {
 
         const title = document.createElement('div');
         title.className = 'title';
-        title.innerText = this.text;
+        title.innerText = this.title;
         noteContainer.appendChild(title);
+
         const text = document.createElement('div');
         text.className = 'text';
         text.innerText = this.text;
         noteContainer.appendChild(text);
+
         const edit = document.createElement('img');
         edit.className = 'edit';
         edit.src = Edit;
         noteContainer.appendChild(edit);
+
         const remove = document.createElement('img');
         remove.className = 'remove';
         remove.src = Remove;
@@ -43,11 +46,14 @@ export default class Notes {
         });
         
         remove.addEventListener('click', () => {
-            this.deleteDom(item);
+            this.deleteDom(noteContainer);
         });        
     }
-    
+
     editForm(titleDom, textDom) {
+        document.querySelector('.edit-note-window').style.display = 'block';
+        document.querySelector('.add-window').style.display = 'none';
+
         this.generateForm();
 
         const saveBtn = document.querySelector('.save');
@@ -65,6 +71,7 @@ export default class Notes {
             textDom.innerText = this.text;
 
             this.removeForm();
+            document.querySelector('.edit-note-window').style.display = 'none';
         });
     }
 
@@ -72,6 +79,7 @@ export default class Notes {
         const form = document.createElement('form');
         form.className = 'edit-note-form';
         document.querySelector('.edit-note-window').appendChild(form);
+        
         const input = document.createElement('input');
         input.type = 'text';
         input.id = 'edit-title';
@@ -79,6 +87,7 @@ export default class Notes {
         input.placeholder = 'Title';
         input.required = true;
         form.appendChild(input);
+
         const text = document.createElement('textarea');
         text.name = 'text';
         text.id = 'edit-text';
@@ -86,6 +95,7 @@ export default class Notes {
         text.rows = '6';
         text.placeholder = 'Description';
         form.appendChild(text);
+
         const btn = document.createElement('div');
         btn.className = 'save';
         btn.innerText = 'Save Changes';
