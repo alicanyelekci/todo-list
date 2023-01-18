@@ -16,9 +16,34 @@ export default class Todos {
         Todos.list.push({title, text, dueDate, project, priority});
     }
 
+    static filterByDueDate() {
+        const todoItems = document.querySelectorAll('.todo-item');
+
+        todoItems.forEach(key => {
+            const date = key.querySelector('.date');
+
+            if(date.innerText === Todos.getCurrentDate()) {
+                key.style.display = 'flex';
+            }
+            else {
+                key.style.display = 'none';
+            }
+        })
+    }
+
+    static getCurrentDate() {
+        const today = new Date();
+        const day = String(today.getDate()).padStart(2, '0');
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const year = today.getFullYear();
+
+        return `${day}/${month}/${year}`;
+        }
+
     generateDom() {
         const todoContainer = document.createElement('div');
         todoContainer.className = 'todo-item';
+        todoContainer.id = this.project.toString();
         document.querySelector('.todos-page').appendChild(todoContainer);
 
         const complete = document.createElement('input');
@@ -103,6 +128,7 @@ export default class Todos {
         const day = date[2];
         const month = date[1];
         const year = date[0];
+
         if(year === '') return '';
         return `${day}/${month}/${year}`;
     }
@@ -177,15 +203,13 @@ export default class Todos {
     }
     
     deleteDom(todoContainer) {
-        delete this.title;
-        delete this.text;
-        delete this.dueDate;
-        delete this.project;
-        delete this.priority;
-        
-        const index = Todos.list.findIndex(key => key.title === undefined);
+        const deletedTitle = this.title;
+
+        const index = Todos.list.findIndex(key => key.title === deletedTitle);
         Todos.list.splice(index, 1);
         
         todoContainer.remove();
+
+        Projects.removeEmptyProject();
     }
 }

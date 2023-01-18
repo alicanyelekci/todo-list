@@ -59,7 +59,11 @@ const closeBtn = document.querySelector('.close');
 const todoPageBtn = document.querySelector('.home');
 const notePageBtn = document.querySelector('.notes');
 const closeEditBtn = document.querySelector('.close-edit');
+const todayBtn = document.querySelector('.due-today');
 
+todayBtn.addEventListener('click', () => {
+    Todos.filterByDueDate();
+});
 closeEditBtn.addEventListener('click', () => {
     document.querySelector('.edit-todo-window').style.display = 'none';
     document.querySelector('.edit-note-window').style.display = 'none';
@@ -108,6 +112,7 @@ todoPageBtn.addEventListener('click', () => {
     document.querySelector('.todos-page').style.display = 'block';
     document.querySelector('.notes-page').style.display = 'none';
     document.querySelector('.add-window').style.display = 'none';
+    Projects.showAll();
     page.clearForms();
 })
 notePageBtn.addEventListener('click', () => {

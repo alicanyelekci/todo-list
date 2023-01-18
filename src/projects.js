@@ -1,4 +1,4 @@
-import Todos from "./todos";
+import Todos from './todos.js';
 
 export default class Projects {
 
@@ -29,34 +29,65 @@ export default class Projects {
             projectName.className = 'project-option';
             sidebarProjects.appendChild(projectName);
 
+            projectName.addEventListener('click', () => {
+                Projects.filterByProject(key.title);
+            });
+
             const projectPage = document.createElement('div');
             projectPage.className = 'project-page';
             projectPage.id = `${key.title}`;
             document.querySelector('.project-pages').appendChild(projectPage);
         });
-
-        // const projectOptions = document.querySelectorAll('.project-option');
-
-        // projectOptions.forEach(key => {
-        //     key.addEventListener('click', () => {
-        //         document.querySelector('.add-window').style.display = 'none';
-        //         document.querySelector('.todos-page').style.display = 'none';
-        //         document.querySelector('.notes-page').style.display = 'none';
-        //         document.getElementById(`${key.title}`).style.display = 'block';
-        //     })
-        // });
     }
 
-    generateProjectPage() {
+    static filterByProject(projectName) {
+        const projects = Projects.list;
 
+        projects.forEach(key => {
+            if(key.title === projectName) {
+                const elements = document.querySelectorAll(`#${key.title.toString()}`);
+                elements.forEach(key => key.style.display = 'flex');
+            }
+            else {
+                const elements = document.querySelectorAll(`#${key.title}`);
+                elements.forEach(key => key.style.display = 'none');
+            }
+        })
     }
 
-    removeProject() {
-
+    static showAll() {
+        const projects = Projects.list;
+        
+        projects.forEach(key => {
+            const elements = document.querySelectorAll(`#${key.title}`);
+            elements.forEach(key => key.style.display = 'flex');
+        })
     }
-
+    
     static removeAll() {
         const projects = document.querySelectorAll('.project-option');
         projects.forEach(key => key.remove());
+    }
+    
+    static removeEmptyProject() {
+        const projectNames = Projects.list;
+        const todos = Todos.list;
+        let count = 0;
+        
+        projectNames.forEach(key => {
+            todos.forEach(todo => {
+                if(todo.project === key.title) count++;
+            })
+
+            if(count === 0 && key.title !== 'MAIN') {          
+                projectNames.splice(projectNames.indexOf(key), 1);
+
+                Projects.list = projectNames;
+            }
+
+            count = 0;
+        })
+
+        Projects.addProjectDom();
     }
 }
