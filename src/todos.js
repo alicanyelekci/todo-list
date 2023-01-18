@@ -96,6 +96,7 @@ export default class Todos {
         this.generateForm();
 
         const saveBtn = document.querySelector('.save');
+        const closeBtn = document.querySelector('.close-edit');
         const titleForm = document.getElementById('edit-title');
         const textForm = document.getElementById('edit-text');
         const dateForm = document.getElementById('edit-date');
@@ -121,6 +122,11 @@ export default class Todos {
             this.removeForm();
             document.querySelector('.edit-todo-window').style.display = 'none';
         });
+
+        closeBtn.addEventListener('click', () => {
+            this.removeForm();
+            document.querySelector('.edit-todo-window').style.display = 'none';
+        });
     }
 
     getDueDate(dueDate) {
@@ -137,6 +143,11 @@ export default class Todos {
         const form = document.createElement('form');
         form.className = 'edit-todo-form';
         document.querySelector('.edit-todo-window').appendChild(form);
+
+        const closeBtn = document.createElement('div');
+        closeBtn.className = 'close-edit';
+        closeBtn.innerText = 'X';
+        form.appendChild(closeBtn);
         
         const input = document.createElement('input');
         input.type = 'text';
@@ -192,10 +203,10 @@ export default class Todos {
         priority.appendChild(high);
         form.appendChild(priority);
 
-        const btn = document.createElement('div');
-        btn.className = 'save';
-        btn.innerText = 'Save Changes';
-        form.appendChild(btn);
+        const saveBtn = document.createElement('div');
+        saveBtn.className = 'save';
+        saveBtn.innerText = 'Save Changes';
+        form.appendChild(saveBtn);
     }
 
     removeForm() {

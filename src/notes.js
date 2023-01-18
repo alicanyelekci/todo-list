@@ -57,6 +57,7 @@ export default class Notes {
         this.generateForm();
 
         const saveBtn = document.querySelector('.save');
+        const closeBtn = document.querySelector('.close-edit');
         const titleForm = document.getElementById('edit-title');
         const textForm = document.getElementById('edit-text');
 
@@ -73,12 +74,22 @@ export default class Notes {
             this.removeForm();
             document.querySelector('.edit-note-window').style.display = 'none';
         });
+
+        closeBtn.addEventListener('click', () => {
+            this.removeForm();
+            document.querySelector('.edit-note-window').style.display = 'none';
+        });
     }
 
     generateForm() {
         const form = document.createElement('form');
         form.className = 'edit-note-form';
         document.querySelector('.edit-note-window').appendChild(form);
+
+        const closeBtn = document.createElement('div');
+        closeBtn.className = 'close-edit';
+        closeBtn.innerText = 'X';
+        form.appendChild(closeBtn);
         
         const input = document.createElement('input');
         input.type = 'text';
@@ -96,10 +107,10 @@ export default class Notes {
         text.placeholder = 'Description';
         form.appendChild(text);
 
-        const btn = document.createElement('div');
-        btn.className = 'save';
-        btn.innerText = 'Save Changes';
-        form.appendChild(btn);
+        const saveBtn = document.createElement('div');
+        saveBtn.className = 'save';
+        saveBtn.innerText = 'Save Changes';
+        form.appendChild(saveBtn);
     }
 
     removeForm() {

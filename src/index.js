@@ -58,15 +58,10 @@ const newNoteBtn = document.querySelector('.new-note');
 const closeBtn = document.querySelector('.close');
 const todoPageBtn = document.querySelector('.home');
 const notePageBtn = document.querySelector('.notes');
-const closeEditBtn = document.querySelector('.close-edit');
 const todayBtn = document.querySelector('.due-today');
 
 todayBtn.addEventListener('click', () => {
     Todos.filterByDueDate();
-});
-closeEditBtn.addEventListener('click', () => {
-    document.querySelector('.edit-todo-window').style.display = 'none';
-    document.querySelector('.edit-note-window').style.display = 'none';
 });
 addTodoBtn.addEventListener('click', (e) => {
     e.preventDefault(); //prevents sending the form and refreshing the page
