@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Development</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
   <body>
     <div class="header">
       <div class="header-title">To-Do List</div>
@@ -14,21 +14,18 @@
       <div class="home">Home</div>
       <div class="due-today">Today</div>
       <div class="projects">Projects</div>
-      <ul class="project-names">
-      </ul>
+      <ul class="project-names"></ul>
       <div class="notes">Notes</div>
       <button class="add-button">Add</button>
     </div>
 
     <div class="content">
       <div class="todos-page">
-        <div class="edit-todo-window">
-        </div>
+        <div class="edit-todo-window"></div>
       </div>
-      
+
       <div class="notes-page">
-        <div class="edit-note-window">
-        </div>
+        <div class="edit-note-window"></div>
       </div>
 
       <div class="due-today-page"></div>
@@ -40,46 +37,48 @@
         <button class="new-note">New Note</button>
         <button class="close">X</button>
         <form class="add-todo-form">
-          <label for="title">Title:</label><br>
-          <input type="text" id="todo-title" name="title" required><br>
-  
-          <label for="text">Text:</label><br>
-          <textarea name="text" id="todo-text" cols="30" rows="6"></textarea><br>
-  
-          <label for="due-date">Due Date:</label><br>
-          <input type="date" id="due-date" name="due-date"><br>
-  
-          <label for="projects">Choose project:</label><br>
-          <select id="projects" name="projects" required>
-          </select><br>
+          <label for="title">Title:</label><br />
+          <input type="text" id="todo-title" name="title" required /><br />
 
-          <label for="priority">Priority</label><br>
+          <label for="text">Text:</label><br />
+          <textarea name="text" id="todo-text" cols="30" rows="6"></textarea
+          ><br />
+
+          <label for="due-date">Due Date:</label><br />
+          <input type="date" id="due-date" name="due-date" /><br />
+
+          <label for="projects">Choose project:</label><br />
+          <select id="projects" name="projects" required></select
+          ><br />
+
+          <label for="priority">Priority</label><br />
           <select id="priority" name="priority" required>
             <option value="low">Low</option>
             <option value="medium">Medium</option>
-            <option value="high">High</option>
-          </select><br>
-  
+            <option value="high">High</option></select
+          ><br />
+
           <button type="submit" class="submit-todo">Add</button>
         </form>
         <form class="add-project-form">
-          <label for="title">Title:</label><br>
-          <input type="text" id="project-title" name="title" required><br>
-  
+          <label for="title">Title:</label><br />
+          <input type="text" id="project-title" name="title" required /><br />
+
           <button type="submit" class="submit-project">Add</button>
         </form>
         <form class="add-note-form">
-          <label for="title">Title:</label><br>
-          <input type="text" id="note-title" name="title" required><br>
-  
-          <label for="text">Text:</label><br>
-          <textarea name="text" id="note-text" cols="30" rows="6"></textarea><br>
-  
+          <label for="title">Title:</label><br />
+          <input type="text" id="note-title" name="title" required /><br />
+
+          <label for="text">Text:</label><br />
+          <textarea name="text" id="note-text" cols="30" rows="6"></textarea
+          ><br />
+
           <button type="submit" class="submit-note">Add</button>
         </form>
       </div>
     </div>
-    
+
     <div class="footer">2023 alicanyelekci</div>
   </body>
 </html>

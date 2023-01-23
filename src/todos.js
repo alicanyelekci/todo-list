@@ -1,226 +1,247 @@
-import Remove from './remove.png';
-import Edit from './edit.png';
-import Projects from './projects.js';
+import Remove from "./remove.png";
+import Edit from "./edit.png";
+import Projects from "./projects.js";
 
 export default class Todos {
+  static list = [];
 
-    static list = [];
+  constructor(title, text, dueDate, project, priority) {
+    this.title = title;
+    this.text = text;
+    this.dueDate = dueDate;
+    this.project = project;
+    this.priority = priority;
 
-    constructor(title, text, dueDate, project, priority){
-        this.title = title;
-        this.text = text;
-        this.dueDate = dueDate;
-        this.project = project;
-        this.priority = priority;
+    Todos.list.push({ title, text, dueDate, project, priority });
+  }
 
-        Todos.list.push({title, text, dueDate, project, priority});
-    }
+  static removeEmptyProject() {
+    const projectNames = Projects.list;
+    const todos = Todos.list;
+    let count = 0;
 
-    static filterByDueDate() {
-        const todoItems = document.querySelectorAll('.todo-item');
+    projectNames.forEach((key) => {
+      todos.forEach((todo) => {
+        if (todo.project === key.title) count += 1;
+      });
 
-        todoItems.forEach(key => {
-            const date = key.querySelector('.date');
+      if (count === 0 && key.title !== "MAIN") {
+        projectNames.splice(projectNames.indexOf(key), 1);
 
-            if(date.innerText === Todos.getCurrentDate()) {
-                key.style.display = 'flex';
-            }
-            else {
-                key.style.display = 'none';
-            }
-        })
-    }
+        Projects.list = projectNames;
+      }
 
-    static getCurrentDate() {
-        const today = new Date();
-        const day = String(today.getDate()).padStart(2, '0');
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const year = today.getFullYear();
+      count = 0;
+    });
 
-        return `${day}/${month}/${year}`;
-        }
+    Projects.addProjectDom();
+  }
 
-    generateDom() {
-        const todoContainer = document.createElement('div');
-        todoContainer.className = 'todo-item';
-        todoContainer.id = this.project.toString();
-        document.querySelector('.todos-page').appendChild(todoContainer);
+  static filterByDueDate() {
+    const todoItems = document.querySelectorAll(".todo-item");
 
-        const complete = document.createElement('input');
-        complete.className = 'complete';
-        complete.type = 'checkbox';
-        todoContainer.appendChild(complete);
+    todoItems.forEach((key) => {
+      const date = key.querySelector(".date");
 
-        const title = document.createElement('div');
-        title.className = 'title';
-        title.innerText = this.title;
-        todoContainer.appendChild(title);
+      if (date.innerText === Todos.getCurrentDate()) {
+        key.style.display = "flex";
+      } else {
+        key.style.display = "none";
+      }
+    });
+  }
 
-        const date = document.createElement('div');
-        date.className = 'date';
-        date.innerText = this.getDueDate(this.dueDate);
-        todoContainer.appendChild(date);
+  static getCurrentDate() {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, "0");
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const year = today.getFullYear();
 
-        const edit = document.createElement('img');
-        edit.className = 'edit';
-        edit.src = Edit;
-        todoContainer.appendChild(edit);
+    return `${day}/${month}/${year}`;
+  }
 
-        const remove = document.createElement('img');
-        remove.className = 'remove';
-        remove.src = Remove;
-        todoContainer.appendChild(remove);
+  generateDom() {
+    const todoContainer = document.createElement("div");
+    todoContainer.className = "todo-item";
+    todoContainer.id = this.project.toString();
+    document.querySelector(".todos-page").appendChild(todoContainer);
 
-        complete.addEventListener('click', () => {
-            this.complete(title);
-        });
-        
-        edit.addEventListener('click', () => {
-            this.editForm(title, date);
-        });
-        
-        remove.addEventListener('click', () => {
-            this.deleteDom(todoContainer);
-        });        
-    }
-    
-    complete(title) {
-        if(title.style.textDecoration !== 'line-through') title.style.textDecoration = 'line-through';
-        else title.style.removeProperty('text-decoration');
-    }
-    
-    editForm(titleDom, dateDom) {
-        document.querySelector('.edit-todo-window').style.display = 'block';
-        document.querySelector('.add-window').style.display = 'none';
+    const complete = document.createElement("input");
+    complete.className = "complete";
+    complete.type = "checkbox";
+    todoContainer.appendChild(complete);
 
-        this.generateForm();
+    const title = document.createElement("div");
+    title.className = "title";
+    title.innerText = this.title;
+    todoContainer.appendChild(title);
 
-        const saveBtn = document.querySelector('.save');
-        const closeBtn = document.querySelector('.close-edit');
-        const titleForm = document.getElementById('edit-title');
-        const textForm = document.getElementById('edit-text');
-        const dateForm = document.getElementById('edit-date');
-        const projectForm = document.getElementById('edit-projects');
-        const priorityForm = document.getElementById('edit-priority');
+    const date = document.createElement("div");
+    date.className = "date";
+    date.innerText = Todos.getDueDate(this.dueDate);
+    todoContainer.appendChild(date);
 
-        titleForm.value = this.title;
-        textForm.value = this.text;
-        dateForm.value = this.dueDate;
-        projectForm.value = this.project;
-        priorityForm.value = this.priority;
-        
-        saveBtn.addEventListener('click', () => {
-            this.title = titleForm.value;
-            this.text = textForm.value;
-            this.dueDate = this.getDueDate(dateForm.value);
-            this.project = projectForm.value;
-            this.priority = priorityForm.value;
-            
-            titleDom.innerText = this.title;
-            dateDom.innerText = this.dueDate;
+    const edit = document.createElement("img");
+    edit.className = "edit";
+    edit.src = Edit;
+    todoContainer.appendChild(edit);
 
-            this.removeForm();
-            document.querySelector('.edit-todo-window').style.display = 'none';
-        });
+    const remove = document.createElement("img");
+    remove.className = "remove";
+    remove.src = Remove;
+    todoContainer.appendChild(remove);
 
-        closeBtn.addEventListener('click', () => {
-            this.removeForm();
-            document.querySelector('.edit-todo-window').style.display = 'none';
-        });
-    }
+    complete.addEventListener("click", () => {
+      Todos.complete(title);
+    });
 
-    getDueDate(dueDate) {
-        const date = dueDate.split('-');
-        const day = date[2];
-        const month = date[1];
-        const year = date[0];
+    edit.addEventListener("click", () => {
+      this.editForm(title, date);
+    });
 
-        if(year === '') return '';
-        return `${day}/${month}/${year}`;
-    }
+    remove.addEventListener("click", () => {
+      this.deleteDom(todoContainer);
+    });
+  }
 
-    generateForm() {
-        const form = document.createElement('form');
-        form.className = 'edit-todo-form';
-        document.querySelector('.edit-todo-window').appendChild(form);
+  static complete(title) {
+    if (title.style.textDecoration !== "line-through")
+      title.style.textDecoration = "line-through";
+    else title.style.removeProperty("text-decoration");
+  }
 
-        const closeBtn = document.createElement('div');
-        closeBtn.className = 'close-edit';
-        closeBtn.innerText = 'X';
-        form.appendChild(closeBtn);
-        
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.id = 'edit-title';
-        input.name = 'title';
-        input.placeholder = 'Title';
-        input.required = true;
-        form.appendChild(input);
+  editForm(titleDom, dateDom) {
+    document.querySelector(".edit-todo-window").style.display = "block";
+    document.querySelector(".add-window").style.display = "none";
 
-        const text = document.createElement('textarea');
-        text.name = 'text';
-        text.id = 'edit-text';
-        text.cols = '30';
-        text.rows = '6';
-        text.placeholder = 'Description';
-        form.appendChild(text);
+    Todos.generateForm();
 
-        const dueDate = document.createElement('input');
-        dueDate.type = 'date';
-        dueDate.id = 'edit-date';
-        dueDate.name = 'due-date';
-        form.appendChild(dueDate);
+    const saveBtn = document.querySelector(".save");
+    const closeBtn = document.querySelector(".close-edit");
+    const titleForm = document.getElementById("edit-title");
+    const textForm = document.getElementById("edit-text");
+    const dateForm = document.getElementById("edit-date");
+    const projectForm = document.getElementById("edit-projects");
+    const priorityForm = document.getElementById("edit-priority");
 
-        const projects = document.createElement('select');
-        projects.id = 'edit-projects';
-        projects.name = 'projects';
-        projects.required = true;
-        form.appendChild(projects);
+    titleForm.value = this.title;
+    textForm.value = this.text;
+    dateForm.value = this.dueDate;
+    projectForm.value = this.project;
+    priorityForm.value = this.priority;
 
-        const projectOptions = Projects.list;
-        projectOptions.forEach(key => {
-            const project = document.createElement('option');
-            project.value = `${key.title}`;
-            project.innerText = `${key.title.toUpperCase()}`;
-            projects.appendChild(project);
-        });
+    saveBtn.addEventListener("click", () => {
+      this.title = titleForm.value;
+      this.text = textForm.value;
+      this.dueDate = Todos.getDueDate(dateForm.value);
+      this.project = projectForm.value;
+      this.priority = priorityForm.value;
 
-        const priority = document.createElement('select');
-        priority.id = 'edit-priority';
-        priority.name = 'priority';
-        priority.required = true;
-        const low = document.createElement('option');
-        low.value = 'low';
-        low.innerText = 'Low';
-        priority.appendChild(low);
-        const medium = document.createElement('option');
-        medium.value = 'medium';
-        medium.innerText = 'Medium';
-        priority.appendChild(medium);
-        const high = document.createElement('option');
-        high.value = 'high';
-        high.innerText = 'High';
-        priority.appendChild(high);
-        form.appendChild(priority);
+      titleDom.innerText = this.title;
+      dateDom.innerText = this.dueDate;
 
-        const saveBtn = document.createElement('div');
-        saveBtn.className = 'save';
-        saveBtn.innerText = 'Save Changes';
-        form.appendChild(saveBtn);
-    }
+      Todos.removeForm();
+      document.querySelector(".edit-todo-window").style.display = "none";
+    });
 
-    removeForm() {
-        document.querySelector('.edit-todo-form').remove();
-    }
-    
-    deleteDom(todoContainer) {
-        const deletedTitle = this.title;
+    closeBtn.addEventListener("click", () => {
+      Todos.removeForm();
+      document.querySelector(".edit-todo-window").style.display = "none";
+    });
+  }
 
-        const index = Todos.list.findIndex(key => key.title === deletedTitle);
-        Todos.list.splice(index, 1);
-        
-        todoContainer.remove();
+  static getDueDate(dueDate) {
+    const date = dueDate.split("-");
+    const day = date[2];
+    const month = date[1];
+    const year = date[0];
 
-        Projects.removeEmptyProject();
-    }
+    if (year === "") return "";
+    return `${day}/${month}/${year}`;
+  }
+
+  static generateForm() {
+    const form = document.createElement("form");
+    form.className = "edit-todo-form";
+    document.querySelector(".edit-todo-window").appendChild(form);
+
+    const closeBtn = document.createElement("div");
+    closeBtn.className = "close-edit";
+    closeBtn.innerText = "X";
+    form.appendChild(closeBtn);
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.id = "edit-title";
+    input.name = "title";
+    input.placeholder = "Title";
+    input.required = true;
+    form.appendChild(input);
+
+    const text = document.createElement("textarea");
+    text.name = "text";
+    text.id = "edit-text";
+    text.cols = "30";
+    text.rows = "6";
+    text.placeholder = "Description";
+    form.appendChild(text);
+
+    const dueDate = document.createElement("input");
+    dueDate.type = "date";
+    dueDate.id = "edit-date";
+    dueDate.name = "due-date";
+    form.appendChild(dueDate);
+
+    const projects = document.createElement("select");
+    projects.id = "edit-projects";
+    projects.name = "projects";
+    projects.required = true;
+    form.appendChild(projects);
+
+    const projectOptions = Projects.list;
+    projectOptions.forEach((key) => {
+      const project = document.createElement("option");
+      project.value = `${key.title}`;
+      project.innerText = `${key.title.toUpperCase()}`;
+      projects.appendChild(project);
+    });
+
+    const priority = document.createElement("select");
+    priority.id = "edit-priority";
+    priority.name = "priority";
+    priority.required = true;
+    const low = document.createElement("option");
+    low.value = "low";
+    low.innerText = "Low";
+    priority.appendChild(low);
+    const medium = document.createElement("option");
+    medium.value = "medium";
+    medium.innerText = "Medium";
+    priority.appendChild(medium);
+    const high = document.createElement("option");
+    high.value = "high";
+    high.innerText = "High";
+    priority.appendChild(high);
+    form.appendChild(priority);
+
+    const saveBtn = document.createElement("div");
+    saveBtn.className = "save";
+    saveBtn.innerText = "Save Changes";
+    form.appendChild(saveBtn);
+  }
+
+  static removeForm() {
+    document.querySelector(".edit-todo-form").remove();
+  }
+
+  deleteDom(todoContainer) {
+    const deletedTitle = this.title;
+
+    const index = Todos.list.findIndex((key) => key.title === deletedTitle);
+    Todos.list.splice(index, 1);
+
+    todoContainer.remove();
+
+    Projects.removeEmptyProject();
+  }
 }
