@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import Todos from "./todos.js";
 import Projects from "./projects.js";
 import Notes from "./notes.js";
@@ -96,6 +97,8 @@ newNoteBtn.addEventListener("click", () => {
 });
 addBtn.addEventListener("click", () => {
   document.querySelector(".add-window").style.display = "grid";
+
+  console.log(format(new Date(), "dd/MM/yyyy"));
 });
 closeBtn.addEventListener("click", () => {
   document.querySelector(".add-window").style.display = "none";

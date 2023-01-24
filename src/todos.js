@@ -44,21 +44,12 @@ export default class Todos {
     todoItems.forEach((key) => {
       const date = key.querySelector(".date");
 
-      if (date.innerText === Todos.getCurrentDate()) {
+      if (date.innerText === format(new Date(), "dd/MM/yyyy")) {
         key.style.display = "flex";
       } else {
         key.style.display = "none";
       }
     });
-  }
-
-  static getCurrentDate() {
-    const today = new Date();
-    const day = String(today.getDate()).padStart(2, "0");
-    const month = String(today.getMonth() + 1).padStart(2, "0");
-    const year = today.getFullYear();
-
-    return `${day}/${month}/${year}`;
   }
 
   generateDom() {
