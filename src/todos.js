@@ -27,15 +27,11 @@ export default class Todos {
       });
 
       if (count === 0 && key.title !== "MAIN") {
-        projectNames.splice(projectNames.indexOf(key), 1);
-
-        Projects.list = projectNames;
+        Projects.removeProject(key.title);
       }
 
       count = 0;
     });
-
-    Projects.addProjectDom();
   }
 
   static filterByDueDate() {
@@ -224,6 +220,6 @@ export default class Todos {
 
     todoContainer.remove();
 
-    Projects.removeEmptyProject();
+    Todos.removeEmptyProject();
   }
 }

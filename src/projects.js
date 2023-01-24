@@ -1,5 +1,5 @@
 export default class Projects {
-  static list = [{ title: "MAIN" }];
+  static list = [];
 
   constructor(title) {
     this.title = title;
@@ -7,33 +7,43 @@ export default class Projects {
     Projects.list.push({ title });
   }
 
-  static addProjectDom() {
-    Projects.removeAll();
-
+  generateProjectDom() {
     const projectSelection = document.getElementById("projects");
     const sidebarProjects = document.querySelector(".project-names");
     const projectsList = Projects.list;
 
+    const projectOption = document.createElement("option");
+    projectOption.value = `${this.title}`;
+    projectOption.innerText = `${this.title.toUpperCase()}`;
+    projectOption.className = "project-option";
+    projectOption.id = `${this.title}`;
+    projectSelection.appendChild(projectOption);
+
+    const projectName = document.createElement("li");
+    projectName.innerText = `${this.title.toUpperCase()}`;
+    projectName.className = "project-option";
+    projectName.id = `${this.title}`;
+    sidebarProjects.appendChild(projectName);
+
+    const projectPage = document.createElement("div");
+    projectPage.className = "project-page";
+    projectPage.id = `${this.title}`;
+    document.querySelector(".project-pages").appendChild(projectPage);
+
     projectsList.forEach((key) => {
-      const projectOption = document.createElement("option");
-      projectOption.value = `${key.title}`;
-      projectOption.innerText = `${key.title.toUpperCase()}`;
-      projectOption.className = "project-option";
-      projectSelection.appendChild(projectOption);
-
-      const projectName = document.createElement("li");
-      projectName.innerText = `${key.title.toUpperCase()}`;
-      projectName.className = "project-option";
-      sidebarProjects.appendChild(projectName);
-
       projectName.addEventListener("click", () => {
         Projects.filterByProject(key.title);
       });
+    });
+  }
 
-      const projectPage = document.createElement("div");
-      projectPage.className = "project-page";
-      projectPage.id = `${key.title}`;
-      document.querySelector(".project-pages").appendChild(projectPage);
+  static removeProject(deletedTitle) {
+    const index = Projects.list.findIndex((key) => key.title === deletedTitle);
+    Projects.list.splice(index, 1);
+
+    document.querySelectorAll(`#${deletedTitle}`).forEach((key) => {
+      console.log(key);
+      key.remove();
     });
   }
 

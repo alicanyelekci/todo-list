@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import Todos from "./todos.js";
 import Projects from "./projects.js";
 import Notes from "./notes.js";
@@ -6,7 +5,8 @@ import "./style.css";
 
 const domManipulator = () => {
   const start = () => {
-    Projects.addProjectDom();
+    const project = new Projects("MAIN");
+    project.generateProjectDom();
   };
 
   const clearForms = () => {
@@ -36,11 +36,20 @@ const domManipulator = () => {
     note.generateNoteDom();
   };
 
+  const generateProject = () => {
+    const project = new Projects(
+      document.getElementById("project-title").value
+    );
+
+    project.generateProjectDom();
+  };
+
   return {
     start,
     clearForms,
     generateTodo,
     generateNote,
+    generateProject,
   };
 };
 
@@ -63,19 +72,28 @@ todayBtn.addEventListener("click", () => {
   Todos.filterByDueDate();
 });
 addTodoBtn.addEventListener("click", (e) => {
-  e.preventDefault(); // prevents sending the form and refreshing the page
-  page.generateTodo();
-  page.clearForms();
+  if (
+    document.getElementById("todo-title").value !== "" &&
+    document.getElementById("due-date").value !== ""
+  ) {
+    e.preventDefault(); // prevents sending the form and refreshing the page
+    page.generateTodo();
+    page.clearForms();
+  }
 });
 addProjectBtn.addEventListener("click", (e) => {
-  e.preventDefault(); // prevents sending the form and refreshing the page
-  page.generateProject();
-  page.clearForms();
+  if (document.getElementById("project-title").value !== "") {
+    e.preventDefault(); // prevents sending the form and refreshing the page
+    page.generateProject();
+    page.clearForms();
+  }
 });
 addNoteBtn.addEventListener("click", (e) => {
-  e.preventDefault(); // prevents sending the form and refreshing the page
-  page.generateNote();
-  page.clearForms();
+  if (document.getElementById("note-title").value !== "") {
+    e.preventDefault(); // prevents sending the form and refreshing the page
+    page.generateNote();
+    page.clearForms();
+  }
 });
 newTodoBtn.addEventListener("click", () => {
   document.querySelector(".add-todo-form").style.display = "block";
@@ -97,8 +115,6 @@ newNoteBtn.addEventListener("click", () => {
 });
 addBtn.addEventListener("click", () => {
   document.querySelector(".add-window").style.display = "grid";
-
-  console.log(format(new Date(), "dd/MM/yyyy"));
 });
 closeBtn.addEventListener("click", () => {
   document.querySelector(".add-window").style.display = "none";

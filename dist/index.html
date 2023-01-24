@@ -38,25 +38,23 @@
         <button class="close">X</button>
         <form class="add-todo-form">
           <label for="title">Title:</label><br />
-          <input type="text" id="todo-title" name="title" required /><br />
+          <input type="text" id="todo-title" name="title" required/><br/>
 
           <label for="text">Text:</label><br />
           <textarea name="text" id="todo-text" cols="30" rows="6"></textarea
           ><br />
 
           <label for="due-date">Due Date:</label><br />
-          <input type="date" id="due-date" name="due-date" /><br />
+          <input type="date" id="due-date" name="due-date" required/><br />
 
           <label for="projects">Choose project:</label><br />
-          <select id="projects" name="projects" required></select
-          ><br />
+          <select id="projects" name="projects" required></select><br/>
 
           <label for="priority">Priority</label><br />
           <select id="priority" name="priority" required>
             <option value="low">Low</option>
             <option value="medium">Medium</option>
-            <option value="high">High</option></select
-          ><br />
+            <option value="high">High</option></select><br />
 
           <button type="submit" class="submit-todo">Add</button>
         </form>
