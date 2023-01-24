@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import Remove from "./remove.png";
 import Edit from "./edit.png";
 import Projects from "./projects.js";
@@ -78,7 +79,7 @@ export default class Todos {
 
     const date = document.createElement("div");
     date.className = "date";
-    date.innerText = Todos.getDueDate(this.dueDate);
+    date.innerText = format(new Date(this.dueDate), "dd/MM/yyyy");
     todoContainer.appendChild(date);
 
     const edit = document.createElement("img");
@@ -133,7 +134,7 @@ export default class Todos {
     saveBtn.addEventListener("click", () => {
       this.title = titleForm.value;
       this.text = textForm.value;
-      this.dueDate = Todos.getDueDate(dateForm.value);
+      this.dueDate = format(new Date(dateForm.value), "dd/MM/yyyy");
       this.project = projectForm.value;
       this.priority = priorityForm.value;
 
@@ -148,16 +149,6 @@ export default class Todos {
       Todos.removeForm();
       document.querySelector(".edit-todo-window").style.display = "none";
     });
-  }
-
-  static getDueDate(dueDate) {
-    const date = dueDate.split("-");
-    const day = date[2];
-    const month = date[1];
-    const year = date[0];
-
-    if (year === "") return "";
-    return `${day}/${month}/${year}`;
   }
 
   static generateForm() {
