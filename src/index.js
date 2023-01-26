@@ -44,12 +44,46 @@ const domManipulator = () => {
     project.generateProjectDom();
   };
 
+  const checkAvailability = (obj) => {
+    let available = true;
+    if (obj === "todo") {
+      Todos.list.forEach((key) => {
+        if (
+          key.title.toLowerCase() ===
+          document.getElementById("todo-title").value.toLowerCase()
+        ) {
+          available = false;
+        }
+      });
+    } else if (obj === "project") {
+      Projects.list.forEach((key) => {
+        if (
+          key.title.toLowerCase() ===
+          document.getElementById("project-title").value.toLowerCase()
+        ) {
+          available = false;
+        }
+      });
+    } else if (obj === "note") {
+      Notes.list.forEach((key) => {
+        if (
+          key.title.toLowerCase() ===
+          document.getElementById("note-title").value.toLowerCase()
+        ) {
+          available = false;
+        }
+      });
+    }
+    return available;
+  };
+
   return {
     start,
     clearForms,
     generateTodo,
     generateNote,
     generateProject,
+    checkAvailability,
   };
 };
 
@@ -72,25 +106,31 @@ todayBtn.addEventListener("click", () => {
   Todos.filterByDueDate();
 });
 addTodoBtn.addEventListener("click", (e) => {
+  e.preventDefault(); // prevents sending the form and refreshing the page
   if (
     document.getElementById("todo-title").value !== "" &&
     document.getElementById("due-date").value !== ""
   ) {
-    e.preventDefault(); // prevents sending the form and refreshing the page
     page.generateTodo();
     page.clearForms();
   }
 });
 addProjectBtn.addEventListener("click", (e) => {
-  if (document.getElementById("project-title").value !== "") {
-    e.preventDefault(); // prevents sending the form and refreshing the page
+  e.preventDefault(); // prevents sending the form and refreshing the page
+  if (
+    document.getElementById("project-title").value !== "" &&
+    page.checkAvailability("project")
+  ) {
     page.generateProject();
     page.clearForms();
   }
 });
 addNoteBtn.addEventListener("click", (e) => {
-  if (document.getElementById("note-title").value !== "") {
-    e.preventDefault(); // prevents sending the form and refreshing the page
+  e.preventDefault(); // prevents sending the form and refreshing the page
+  if (
+    document.getElementById("note-title").value !== "" &&
+    page.checkAvailability("note")
+  ) {
     page.generateNote();
     page.clearForms();
   }
