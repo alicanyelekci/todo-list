@@ -20,6 +20,9 @@ export default class Projects {
     const projectsList = JSON.parse(localStorage.getItem("projects"));
     if (projectsList !== null) {
       projectsList.forEach((key) => new Projects(key.title));
+    } else {
+      // eslint-disable-next-line no-new
+      new Projects("MAIN");
     }
   }
 

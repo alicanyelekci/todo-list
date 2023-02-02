@@ -8,11 +8,6 @@ const domManipulator = () => {
     Projects.getStorageData();
     Todos.getStorageData();
     Notes.getStorageData();
-
-    if (Projects.list.forEach((key) => key.title !== "MAIN")) {
-      const project = new Projects("MAIN");
-      project.generateProjectDom();
-    }
   };
 
   const clearForms = () => {
@@ -109,6 +104,7 @@ const notePageBtn = document.querySelector(".notes");
 const todayBtn = document.querySelector(".due-today");
 
 window.addEventListener("load", () => {
+  console.log("page started");
   page.start();
 });
 todayBtn.addEventListener("click", () => {
