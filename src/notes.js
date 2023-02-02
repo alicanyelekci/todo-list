@@ -85,7 +85,6 @@ export default class Notes {
     saveBtn.addEventListener("click", () => {
       const index = Notes.list.findIndex((key) => key.title === editedTitle);
 
-      console.log(Notes.list[index]);
       Notes.list[index].title = titleForm.value;
       Notes.list[index].text = textForm.value;
 

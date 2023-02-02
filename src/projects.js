@@ -38,7 +38,7 @@ export default class Projects {
     const projectName = document.createElement("li");
     projectName.innerText = `${this.title.toUpperCase()}`;
     projectName.className = "project-option";
-    projectName.id = `${this.title}`;
+    projectName.id = `${this.title}-project-page`;
     sidebarProjects.appendChild(projectName);
 
     const projectPage = document.createElement("div");
@@ -58,7 +58,6 @@ export default class Projects {
     Projects.list.splice(index, 1);
 
     document.querySelectorAll(`#${deletedTitle}`).forEach((key) => {
-      console.log(key);
       key.remove();
     });
   }

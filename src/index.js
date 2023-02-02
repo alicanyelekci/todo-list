@@ -9,10 +9,6 @@ const domManipulator = () => {
     Todos.getStorageData();
     Notes.getStorageData();
 
-    console.log("projects.list =", Projects.list);
-    console.log("todos.list =", Todos.list);
-    console.log("notes.list =", Notes.list);
-
     if (Projects.list.forEach((key) => key.title !== "MAIN")) {
       const project = new Projects("MAIN");
       project.generateProjectDom();
@@ -31,7 +27,8 @@ const domManipulator = () => {
       document.getElementById("todo-text").value,
       document.getElementById("due-date").value,
       document.getElementById("projects").value,
-      document.getElementById("priority").value
+      document.getElementById("priority").value,
+      false
     );
 
     return todo;
@@ -43,7 +40,7 @@ const domManipulator = () => {
       document.getElementById("note-text").value
     );
 
-    note.generateNoteDom();
+    return note;
   };
 
   const generateProject = () => {

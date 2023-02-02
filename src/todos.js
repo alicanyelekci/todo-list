@@ -6,14 +6,22 @@ import Projects from "./projects.js";
 export default class Todos {
   static list = [];
 
-  constructor(title, text, dueDate, project, priority) {
+  constructor(title, text, dueDate, project, priority, complete) {
     this.title = title;
     this.text = text;
     this.dueDate = dueDate;
     this.project = project;
     this.priority = priority;
+    this.complete = complete;
 
-    Todos.list.push({ title, text, dueDate, project, priority });
+    Todos.list.push({
+      title,
+      text,
+      dueDate,
+      project,
+      priority,
+      complete,
+    });
     Todos.storeData();
 
     this.generateDom();
@@ -30,7 +38,14 @@ export default class Todos {
     if (todosList !== null) {
       todosList.forEach(
         (key) =>
-          new Todos(key.title, key.text, key.dueDate, key.project, key.priority)
+          new Todos(
+            key.title,
+            key.text,
+            key.dueDate,
+            key.project,
+            key.priority,
+            key.complete
+          )
       );
     }
   }
@@ -102,6 +117,11 @@ export default class Todos {
       Todos.complete(title);
     });
 
+    if (this.complete === true) {
+      title.style.textDecoration = "line-through";
+      complete.checked = true;
+    }
+
     edit.addEventListener("click", () => {
       if (document.querySelector(".edit-todo-form") !== null) {
         Todos.removeForm();
@@ -117,10 +137,20 @@ export default class Todos {
     });
   }
 
-  static complete(title) {
-    if (title.style.textDecoration !== "line-through")
-      title.style.textDecoration = "line-through";
-    else title.style.removeProperty("text-decoration");
+  static complete(completedTitle) {
+    const index = Todos.list.findIndex(
+      (key) => key.title === completedTitle.innerText
+    );
+
+    if (Todos.list[index].complete !== true) {
+      completedTitle.style.textDecoration = "line-through";
+      Todos.list[index].complete = true;
+    } else {
+      completedTitle.style.removeProperty("text-decoration");
+      Todos.list[index].complete = false;
+    }
+
+    Todos.storeData();
   }
 
   editForm(titleDom, dateDom) {
@@ -147,7 +177,6 @@ export default class Todos {
     saveBtn.addEventListener("click", () => {
       const index = Todos.list.findIndex((key) => key.title === editedTitle);
 
-      console.log(Todos.list[index]);
       Todos.list[index].title = titleForm.value;
       Todos.list[index].text = textForm.value;
       Todos.list[index].dueDate = dateForm.value;
