@@ -9,6 +9,22 @@ export default class Notes {
     this.text = text;
 
     Notes.list.push({ title, text });
+    Notes.storeData();
+
+    this.generateNoteDom();
+  }
+
+  static storeData() {
+    localStorage.setItem("notes", JSON.stringify(Notes.list));
+  }
+
+  static getStorageData() {
+    Notes.list = [];
+
+    const notesList = JSON.parse(localStorage.getItem("notes"));
+    if (notesList !== null) {
+      notesList.forEach((key) => new Notes(key.title, key.text));
+    }
   }
 
   generateNoteDom() {
@@ -42,10 +58,12 @@ export default class Notes {
 
     edit.addEventListener("click", () => {
       this.editForm(title, text);
+      Notes.storeData();
     });
 
     remove.addEventListener("click", () => {
       this.deleteDom(noteContainer);
+      Notes.storeData();
     });
   }
 
@@ -59,24 +77,27 @@ export default class Notes {
     const closeBtn = document.querySelector(".close-edit");
     const titleForm = document.getElementById("edit-title");
     const textForm = document.getElementById("edit-text");
+    const editedTitle = this.title;
 
     titleForm.value = this.title;
     textForm.value = this.text;
 
     saveBtn.addEventListener("click", () => {
-      this.title = titleForm.value;
-      this.text = textForm.value;
+      const index = Notes.list.findIndex((key) => key.title === editedTitle);
 
-      titleDom.innerText = this.title;
-      textDom.innerText = this.text;
+      console.log(Notes.list[index]);
+      Notes.list[index].title = titleForm.value;
+      Notes.list[index].text = textForm.value;
 
+      titleDom.innerText = titleForm.value;
+      textDom.innerText = textForm.value;
+
+      Notes.storeData();
       Notes.removeForm();
-      document.querySelector(".edit-note-window").style.display = "none";
     });
 
     closeBtn.addEventListener("click", () => {
       Notes.removeForm();
-      document.querySelector(".edit-note-window").style.display = "none";
     });
   }
 

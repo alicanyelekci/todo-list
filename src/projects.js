@@ -5,6 +5,22 @@ export default class Projects {
     this.title = title;
 
     Projects.list.push({ title });
+    Projects.storeData();
+
+    this.generateProjectDom();
+  }
+
+  static storeData() {
+    localStorage.setItem("projects", JSON.stringify(Projects.list));
+  }
+
+  static getStorageData() {
+    Projects.list = [];
+
+    const projectsList = JSON.parse(localStorage.getItem("projects"));
+    if (projectsList !== null) {
+      projectsList.forEach((key) => new Projects(key.title));
+    }
   }
 
   generateProjectDom() {

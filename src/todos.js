@@ -14,6 +14,25 @@ export default class Todos {
     this.priority = priority;
 
     Todos.list.push({ title, text, dueDate, project, priority });
+    Todos.storeData();
+
+    this.generateDom();
+  }
+
+  static storeData() {
+    localStorage.setItem("todos", JSON.stringify(Todos.list));
+  }
+
+  static getStorageData() {
+    Todos.list = [];
+
+    const todosList = JSON.parse(localStorage.getItem("todos"));
+    if (todosList !== null) {
+      todosList.forEach(
+        (key) =>
+          new Todos(key.title, key.text, key.dueDate, key.project, key.priority)
+      );
+    }
   }
 
   static removeEmptyProject() {
@@ -84,11 +103,17 @@ export default class Todos {
     });
 
     edit.addEventListener("click", () => {
+      if (document.querySelector(".edit-todo-form") !== null) {
+        Todos.removeForm();
+      }
+
       this.editForm(title, date);
+      Todos.storeData();
     });
 
     remove.addEventListener("click", () => {
       this.deleteDom(todoContainer);
+      Todos.storeData();
     });
   }
 
@@ -111,6 +136,7 @@ export default class Todos {
     const dateForm = document.getElementById("edit-date");
     const projectForm = document.getElementById("edit-projects");
     const priorityForm = document.getElementById("edit-priority");
+    const editedTitle = this.title;
 
     titleForm.value = this.title;
     textForm.value = this.text;
@@ -119,22 +145,24 @@ export default class Todos {
     priorityForm.value = this.priority;
 
     saveBtn.addEventListener("click", () => {
-      this.title = titleForm.value;
-      this.text = textForm.value;
-      this.dueDate = format(new Date(dateForm.value), "dd/MM/yyyy");
-      this.project = projectForm.value;
-      this.priority = priorityForm.value;
+      const index = Todos.list.findIndex((key) => key.title === editedTitle);
 
-      titleDom.innerText = this.title;
-      dateDom.innerText = this.dueDate;
+      console.log(Todos.list[index]);
+      Todos.list[index].title = titleForm.value;
+      Todos.list[index].text = textForm.value;
+      Todos.list[index].dueDate = dateForm.value;
+      Todos.list[index].project = projectForm.value;
+      Todos.list[index].priority = priorityForm.value;
 
+      titleDom.innerText = titleForm.value;
+      dateDom.innerText = format(new Date(dateForm.value), "dd/MM/yyyy");
+
+      Todos.storeData();
       Todos.removeForm();
-      document.querySelector(".edit-todo-window").style.display = "none";
     });
 
     closeBtn.addEventListener("click", () => {
       Todos.removeForm();
-      document.querySelector(".edit-todo-window").style.display = "none";
     });
   }
 

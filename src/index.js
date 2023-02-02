@@ -5,8 +5,18 @@ import "./style.css";
 
 const domManipulator = () => {
   const start = () => {
-    const project = new Projects("MAIN");
-    project.generateProjectDom();
+    Projects.getStorageData();
+    Todos.getStorageData();
+    Notes.getStorageData();
+
+    console.log("projects.list =", Projects.list);
+    console.log("todos.list =", Todos.list);
+    console.log("notes.list =", Notes.list);
+
+    if (Projects.list.forEach((key) => key.title !== "MAIN")) {
+      const project = new Projects("MAIN");
+      project.generateProjectDom();
+    }
   };
 
   const clearForms = () => {
@@ -24,7 +34,7 @@ const domManipulator = () => {
       document.getElementById("priority").value
     );
 
-    todo.generateDom();
+    return todo;
   };
 
   const generateNote = () => {
@@ -41,7 +51,7 @@ const domManipulator = () => {
       document.getElementById("project-title").value
     );
 
-    project.generateProjectDom();
+    return project;
   };
 
   const checkAvailability = (obj) => {
@@ -88,7 +98,6 @@ const domManipulator = () => {
 };
 
 const page = domManipulator();
-page.start();
 
 const addTodoBtn = document.querySelector(".submit-todo");
 const addProjectBtn = document.querySelector(".submit-project");
@@ -102,6 +111,9 @@ const todoPageBtn = document.querySelector(".home");
 const notePageBtn = document.querySelector(".notes");
 const todayBtn = document.querySelector(".due-today");
 
+window.addEventListener("load", () => {
+  page.start();
+});
 todayBtn.addEventListener("click", () => {
   Todos.filterByDueDate();
 });
@@ -172,4 +184,9 @@ notePageBtn.addEventListener("click", () => {
   document.querySelector(".notes-page").style.display = "block";
   document.querySelector(".add-window").style.display = "none";
   page.clearForms();
+});
+
+// Delete this
+document.querySelector(".header-title").addEventListener("click", () => {
+  localStorage.clear();
 });
