@@ -104,7 +104,6 @@ const notePageBtn = document.querySelector(".notes");
 const todayBtn = document.querySelector(".due-today");
 
 window.addEventListener("load", () => {
-  console.log("page started");
   page.start();
 });
 todayBtn.addEventListener("click", () => {
@@ -141,24 +140,37 @@ addNoteBtn.addEventListener("click", (e) => {
   }
 });
 newTodoBtn.addEventListener("click", () => {
+  newTodoBtn.classList.add("selected");
+  newProjectBtn.classList.remove("selected");
+  newNoteBtn.classList.remove("selected");
+
   document.querySelector(".add-todo-form").style.display = "block";
   document.querySelector(".add-project-form").style.display = "none";
   document.querySelector(".add-note-form").style.display = "none";
   page.clearForms();
 });
 newProjectBtn.addEventListener("click", () => {
+  newTodoBtn.classList.remove("selected");
+  newProjectBtn.classList.add("selected");
+  newNoteBtn.classList.remove("selected");
+
   document.querySelector(".add-todo-form").style.display = "none";
   document.querySelector(".add-project-form").style.display = "block";
   document.querySelector(".add-note-form").style.display = "none";
   page.clearForms();
 });
 newNoteBtn.addEventListener("click", () => {
+  newTodoBtn.classList.remove("selected");
+  newProjectBtn.classList.remove("selected");
+  newNoteBtn.classList.add("selected");
+
   document.querySelector(".add-todo-form").style.display = "none";
   document.querySelector(".add-project-form").style.display = "none";
   document.querySelector(".add-note-form").style.display = "block";
   page.clearForms();
 });
 addBtn.addEventListener("click", () => {
+  newTodoBtn.click();
   document.querySelector(".add-window").style.display = "grid";
 });
 closeBtn.addEventListener("click", () => {
