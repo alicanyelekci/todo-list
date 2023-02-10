@@ -105,8 +105,17 @@ const todayBtn = document.querySelector(".due-today");
 
 window.addEventListener("load", () => {
   page.start();
+  todoPageBtn.click();
 });
 todayBtn.addEventListener("click", () => {
+  todoPageBtn.classList.remove("selected");
+  todayBtn.classList.add("selected");
+  notePageBtn.classList.remove("selected");
+  const projects = document.querySelectorAll(".project-option");
+  projects.forEach((key) => {
+    key.classList.remove("selected");
+  });
+
   Todos.filterByDueDate();
 });
 addTodoBtn.addEventListener("click", (e) => {
@@ -178,6 +187,14 @@ closeBtn.addEventListener("click", () => {
   page.clearForms();
 });
 todoPageBtn.addEventListener("click", () => {
+  todoPageBtn.classList.add("selected");
+  todayBtn.classList.remove("selected");
+  notePageBtn.classList.remove("selected");
+  const projects = document.querySelectorAll(".project-option");
+  projects.forEach((key) => {
+    key.classList.remove("selected");
+  });
+
   document.querySelector(".todos-page").style.display = "block";
   document.querySelector(".notes-page").style.display = "none";
   document.querySelector(".add-window").style.display = "none";
@@ -185,6 +202,14 @@ todoPageBtn.addEventListener("click", () => {
   page.clearForms();
 });
 notePageBtn.addEventListener("click", () => {
+  todoPageBtn.classList.remove("selected");
+  todayBtn.classList.remove("selected");
+  notePageBtn.classList.add("selected");
+  const projects = document.querySelectorAll(".project-option");
+  projects.forEach((key) => {
+    key.classList.remove("selected");
+  });
+
   document.querySelector(".todos-page").style.display = "none";
   document.querySelector(".notes-page").style.display = "block";
   document.querySelector(".add-window").style.display = "none";

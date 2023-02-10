@@ -44,6 +44,20 @@ export default class Projects {
     projectName.id = `${this.title}-project-page`;
     sidebarProjects.appendChild(projectName);
 
+    projectName.addEventListener("click", () => {
+      document.querySelector(".home").classList.remove("selected");
+      document.querySelector(".due-today").classList.remove("selected");
+      document.querySelector(".notes").classList.remove("selected");
+      projectName.classList.add("selected");
+
+      const projects = document.querySelectorAll(".project-option");
+      projects.forEach((key) => {
+        if (key.id !== `${this.title}-project-page`) {
+          key.classList.remove("selected");
+        }
+      });
+    });
+
     const projectPage = document.createElement("div");
     projectPage.className = "project-page";
     projectPage.id = `${this.title}`;
