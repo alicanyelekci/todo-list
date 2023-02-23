@@ -68,7 +68,7 @@ export default class Notes {
   }
 
   editForm(titleDom, textDom) {
-    document.querySelector(".edit-note-window").style.display = "block";
+    document.querySelector(".edit-note-window").style.display = "grid";
     document.querySelector(".add-window").style.display = "none";
 
     Notes.generateForm();
@@ -107,7 +107,7 @@ export default class Notes {
 
     const closeBtn = document.createElement("div");
     closeBtn.className = "close-edit";
-    closeBtn.innerText = "X";
+    closeBtn.innerText = "×";
     form.appendChild(closeBtn);
 
     const input = document.createElement("input");
@@ -134,6 +134,7 @@ export default class Notes {
 
   static removeForm() {
     document.querySelector(".edit-note-form").remove();
+    document.querySelector(".edit-note-window").style = "none";
   }
 
   deleteDom(item) {

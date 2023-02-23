@@ -88,6 +88,10 @@ export default class Todos {
     todoContainer.id = this.project.toString();
     document.querySelector(".todos-page").appendChild(todoContainer);
 
+    const priorityIndicator = document.createElement("div");
+    priorityIndicator.className = "priority-indicator";
+    todoContainer.appendChild(priorityIndicator);
+
     const complete = document.createElement("input");
     complete.className = "complete";
     complete.type = "checkbox";
@@ -113,6 +117,14 @@ export default class Todos {
     remove.src = Remove;
     todoContainer.appendChild(remove);
 
+    if (this.priority === "low") {
+      priorityIndicator.style.backgroundColor = "#22c55e";
+    } else if (this.priority === "medium") {
+      priorityIndicator.style.backgroundColor = "#eab308";
+    } else if (this.priority === "high") {
+      priorityIndicator.style.backgroundColor = "#ef4444";
+    }
+
     complete.addEventListener("click", () => {
       Todos.complete(title);
     });
@@ -127,7 +139,7 @@ export default class Todos {
         Todos.removeForm();
       }
 
-      this.editForm(title, date);
+      this.editForm(title, date, priorityIndicator);
       Todos.storeData();
     });
 
@@ -153,8 +165,8 @@ export default class Todos {
     Todos.storeData();
   }
 
-  editForm(titleDom, dateDom) {
-    document.querySelector(".edit-todo-window").style.display = "block";
+  editForm(titleDom, dateDom, priorityDom) {
+    document.querySelector(".edit-todo-window").style.display = "grid";
     document.querySelector(".add-window").style.display = "none";
 
     Todos.generateForm();
@@ -186,6 +198,14 @@ export default class Todos {
       titleDom.innerText = titleForm.value;
       dateDom.innerText = format(new Date(dateForm.value), "dd/MM/yyyy");
 
+      if (priorityForm.value === "low") {
+        priorityDom.style.backgroundColor = "#22c55e";
+      } else if (priorityForm.value === "medium") {
+        priorityDom.style.backgroundColor = "#eab308";
+      } else if (priorityForm.value === "high") {
+        priorityDom.style.backgroundColor = "#ef4444";
+      }
+
       Todos.storeData();
       Todos.removeForm();
     });
@@ -202,7 +222,7 @@ export default class Todos {
 
     const closeBtn = document.createElement("div");
     closeBtn.className = "close-edit";
-    closeBtn.innerText = "X";
+    closeBtn.innerText = "×";
     form.appendChild(closeBtn);
 
     const input = document.createElement("input");
@@ -267,6 +287,7 @@ export default class Todos {
 
   static removeForm() {
     document.querySelector(".edit-todo-form").remove();
+    document.querySelector(".edit-todo-window").style = "none";
   }
 
   deleteDom(todoContainer) {

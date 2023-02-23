@@ -153,7 +153,7 @@ newTodoBtn.addEventListener("click", () => {
   newProjectBtn.classList.remove("selected");
   newNoteBtn.classList.remove("selected");
 
-  document.querySelector(".add-todo-form").style.display = "block";
+  document.querySelector(".add-todo-form").style.display = "grid";
   document.querySelector(".add-project-form").style.display = "none";
   document.querySelector(".add-note-form").style.display = "none";
   page.clearForms();
@@ -164,7 +164,7 @@ newProjectBtn.addEventListener("click", () => {
   newNoteBtn.classList.remove("selected");
 
   document.querySelector(".add-todo-form").style.display = "none";
-  document.querySelector(".add-project-form").style.display = "block";
+  document.querySelector(".add-project-form").style.display = "grid";
   document.querySelector(".add-note-form").style.display = "none";
   page.clearForms();
 });
@@ -175,7 +175,7 @@ newNoteBtn.addEventListener("click", () => {
 
   document.querySelector(".add-todo-form").style.display = "none";
   document.querySelector(".add-project-form").style.display = "none";
-  document.querySelector(".add-note-form").style.display = "block";
+  document.querySelector(".add-note-form").style.display = "grid";
   page.clearForms();
 });
 addBtn.addEventListener("click", () => {
@@ -195,7 +195,7 @@ todoPageBtn.addEventListener("click", () => {
     key.classList.remove("selected");
   });
 
-  document.querySelector(".todos-page").style.display = "block";
+  document.querySelector(".todos-page").style.display = "flex";
   document.querySelector(".notes-page").style.display = "none";
   document.querySelector(".add-window").style.display = "none";
   Projects.showAll();
@@ -211,12 +211,12 @@ notePageBtn.addEventListener("click", () => {
   });
 
   document.querySelector(".todos-page").style.display = "none";
-  document.querySelector(".notes-page").style.display = "block";
+  document.querySelector(".notes-page").style.display = "flex";
   document.querySelector(".add-window").style.display = "none";
   page.clearForms();
 });
 
-// Delete this
+// Delete
 document.querySelector(".header-title").addEventListener("click", () => {
   localStorage.clear();
 });
