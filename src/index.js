@@ -108,6 +108,9 @@ window.addEventListener("load", () => {
   todoPageBtn.click();
 });
 todayBtn.addEventListener("click", () => {
+  document.querySelector(".todos-page").style.display = "flex";
+  document.querySelector(".notes-page").style.display = "none";
+
   todoPageBtn.classList.remove("selected");
   todayBtn.classList.add("selected");
   notePageBtn.classList.remove("selected");
@@ -122,7 +125,9 @@ addTodoBtn.addEventListener("click", (e) => {
   e.preventDefault(); // prevents sending the form and refreshing the page
   if (
     document.getElementById("todo-title").value !== "" &&
-    document.getElementById("due-date").value !== ""
+    document.getElementById("due-date").value !== "" &&
+    document.getElementById("projects").value !== "" &&
+    document.getElementById("priority").value !== ""
   ) {
     page.generateTodo();
     page.clearForms();

@@ -45,6 +45,9 @@ export default class Projects {
     sidebarProjects.appendChild(projectName);
 
     projectName.addEventListener("click", () => {
+      document.querySelector(".todos-page").style.display = "flex";
+      document.querySelector(".notes-page").style.display = "none";
+
       document.querySelector(".home").classList.remove("selected");
       document.querySelector(".due-today").classList.remove("selected");
       document.querySelector(".notes").classList.remove("selected");
