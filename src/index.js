@@ -243,7 +243,6 @@ notePageBtn.addEventListener("click", () => {
   page.clearForms();
 });
 
-// Delete
-document.querySelector(".header-title").addEventListener("click", () => {
-  localStorage.clear();
-});
+// document.querySelector(".header-title").addEventListener("click", () => {
+//   localStorage.clear();
+// });
