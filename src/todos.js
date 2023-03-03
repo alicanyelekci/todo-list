@@ -50,22 +50,26 @@ export default class Todos {
     }
   }
 
-  static removeEmptyProject() {
-    const projectNames = Projects.list;
+  static removeEmptyProject(removedTitle) {
     const todos = Todos.list;
     let count = 0;
 
-    projectNames.forEach((key) => {
-      todos.forEach((todo) => {
-        if (todo.project === key.title) count += 1;
-      });
-
-      if (count === 0 && key.title !== "MAIN") {
-        Projects.removeProject(key.title);
-      }
-
-      count = 0;
+    todos.forEach((key) => {
+      if (key.project === removedTitle) count += 1;
     });
+
+    if (count === 0 && removedTitle !== "main") {
+      document
+        .querySelector(".remove-project-button")
+        .addEventListener("click", () => {
+          Projects.removeProject(removedTitle);
+        });
+    } else {
+      document
+        .querySelectorAll(".remove-project-button")
+        .forEach((key) => key.remove());
+    }
+    count = 0;
   }
 
   static filterByDueDate() {

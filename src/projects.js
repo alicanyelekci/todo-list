@@ -47,6 +47,14 @@ export default class Projects {
     projectName.addEventListener("click", () => {
       document.querySelector(".todos-page").style.display = "flex";
       document.querySelector(".notes-page").style.display = "none";
+      document
+        .querySelectorAll(".remove-project-button")
+        .forEach((key) => key.remove());
+
+      const removeBtn = document.createElement("button");
+      removeBtn.className = "remove-project-button";
+      removeBtn.innerText = `Remove ${this.title.toUpperCase()} Project`;
+      document.querySelector(".todos-page").appendChild(removeBtn);
 
       document.querySelector(".home").classList.remove("selected");
       document.querySelector(".due-today").classList.remove("selected");
@@ -80,6 +88,13 @@ export default class Projects {
     document.querySelectorAll(`#${deletedTitle}`).forEach((key) => {
       key.remove();
     });
+    document
+      .querySelectorAll(`#${deletedTitle}-project-page`)
+      .forEach((key) => {
+        key.remove();
+      });
+
+    Projects.storeData();
   }
 
   static filterByProject(projectName) {

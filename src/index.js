@@ -38,11 +38,27 @@ const domManipulator = () => {
     return note;
   };
 
+  const updateSidebarProjects = () => {
+    const sidebarProjects = document.querySelectorAll(".project-option");
+
+    sidebarProjects.forEach((key) =>
+      key.addEventListener("click", () => {
+        Todos.removeEmptyProject(key.innerText.toLowerCase());
+      })
+    );
+  };
+
+  const removeEmptyProjectButtons = () => {
+    document
+      .querySelectorAll(".remove-project-button")
+      .forEach((key) => key.remove());
+  };
+
   const generateProject = () => {
     const project = new Projects(
       document.getElementById("project-title").value
     );
-
+    updateSidebarProjects();
     return project;
   };
 
@@ -86,6 +102,8 @@ const domManipulator = () => {
     generateNote,
     generateProject,
     checkAvailability,
+    removeEmptyProjectButtons,
+    updateSidebarProjects,
   };
 };
 
@@ -106,10 +124,12 @@ const todayBtn = document.querySelector(".due-today");
 window.addEventListener("load", () => {
   page.start();
   todoPageBtn.click();
+  page.updateSidebarProjects();
 });
 todayBtn.addEventListener("click", () => {
   document.querySelector(".todos-page").style.display = "flex";
   document.querySelector(".notes-page").style.display = "none";
+  page.removeEmptyProjectButtons();
 
   todoPageBtn.classList.remove("selected");
   todayBtn.classList.add("selected");
@@ -199,6 +219,7 @@ todoPageBtn.addEventListener("click", () => {
   projects.forEach((key) => {
     key.classList.remove("selected");
   });
+  page.removeEmptyProjectButtons();
 
   document.querySelector(".todos-page").style.display = "flex";
   document.querySelector(".notes-page").style.display = "none";
@@ -214,6 +235,7 @@ notePageBtn.addEventListener("click", () => {
   projects.forEach((key) => {
     key.classList.remove("selected");
   });
+  page.removeEmptyProjectButtons();
 
   document.querySelector(".todos-page").style.display = "none";
   document.querySelector(".notes-page").style.display = "flex";
